@@ -55,8 +55,9 @@ class Program
         {
             string encryptedFilePath = file;
             byte[] encryptedData = File.ReadAllBytes(encryptedFilePath);
-            var decryptedFileName =
-                $"{Path.GetFileNameWithoutExtension(encryptedFilePath)}_decrypted.png";
+            string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(encryptedFilePath);
+            string deobfuscatedFileName = Deobfuscate.Deobfuscate.Decrypt(fileNameWithoutExtension);
+            var decryptedFileName = $"{deobfuscatedFileName}.png";
             string decryptedFilePath = Path.Combine(subOutputFolderPath, decryptedFileName);
 
             byte[] md5 = MD5Sum(extPath + Path.GetFileName(encryptedFilePath).ToUpper());
