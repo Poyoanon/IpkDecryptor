@@ -8,9 +8,9 @@ This tool that decrypts Lost Ark .ipk files into .png and .bk2 files.
 
 ## Drag and Drop
 
-> - Place **IpkDecryptor.exe** in an empty folder, preferably.
-> - **Drag and drop** the _ExtRes_ folder _(usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes)_ onto **IpkDecryptor.exe.**
-> - The PNGs will be placed in the _Output_ folder.
+> - Place `IpkDecryptor.exe` in an empty folder, preferably.
+> - **Drag and drop** the `ExtRes` folder `(usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes)` onto `IpkDecryptor.exe.`
+> - The PNGs will be placed in the `Output` folder.
 
 ## Command Line
 
