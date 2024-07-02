@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -10,7 +11,7 @@ class Program
         if (args.Length == 0)
         {
             Console.WriteLine(
-                @"Drag and drop the ExtRes folder (usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes) onto this executable to decrypt files."
+                @"Drag and drop the ExtRes folder (usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes) or the Movies folder (found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\Movies) onto this executable to decrypt files."
             );
             return;
         }
@@ -20,17 +21,28 @@ class Program
         byte[] key = [0xe2, 0xc8, 0x4e, 0x1b, 0x78, 0xc7];
         string outputFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
 
-        DecryptFilesInFolder(folderPath, extension, key, outputFolderPath);
-    }
+        string outputExtension = "";
+        string extPath = "";
+        if (folderPath.EndsWith("ExtRes", StringComparison.OrdinalIgnoreCase))
+        {
+            extPath = @"EXT://EXTRES\\";
+            outputExtension = ".png";
+        }
+        else if (folderPath.EndsWith("Movies", StringComparison.OrdinalIgnoreCase))
+        {
+            extPath = @"EXT://MOVIES\\";
+            outputExtension = ".bk2";
+        }
 
-    static void DecryptFilesInFolder(
-        string folderPath,
-        string extension,
-        byte[] key,
-        string outputFolderPath
-    )
-    {
-        DecryptFilesInSubFolder(folderPath, extension, key, outputFolderPath, "", @"EXT://EXTRES\");
+        DecryptFilesInSubFolder(
+            folderPath,
+            extension,
+            key,
+            outputFolderPath,
+            "",
+            extPath,
+            outputExtension
+        );
     }
 
     static void DecryptFilesInSubFolder(
@@ -39,7 +51,8 @@ class Program
         byte[] key,
         string outputFolderPath,
         string relativePath,
-        string extPath
+        string extPath,
+        string outputExtension
     )
     {
         string subOutputFolderPath = Path.Combine(outputFolderPath, relativePath);
@@ -56,8 +69,22 @@ class Program
             string encryptedFilePath = file;
             byte[] encryptedData = File.ReadAllBytes(encryptedFilePath);
             string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(encryptedFilePath);
+
+            string[] parts = fileNameWithoutExtension.Split('.');
+            if (
+                parts.Length > 1
+                    && parts[parts.Length - 1]
+                        .EndsWith("English", StringComparison.OrdinalIgnoreCase)
+                || parts[parts.Length - 1].EndsWith("French", StringComparison.OrdinalIgnoreCase)
+                || parts[parts.Length - 1].EndsWith("German", StringComparison.OrdinalIgnoreCase)
+                || parts[parts.Length - 1].EndsWith("Spanish", StringComparison.OrdinalIgnoreCase)
+            )
+            {
+                fileNameWithoutExtension = string.Join(".", parts.Take(parts.Length - 1));
+            }
+
             string deobfuscatedFileName = Deobfuscate.Deobfuscate.Decrypt(fileNameWithoutExtension);
-            var decryptedFileName = $"{deobfuscatedFileName}.png";
+            var decryptedFileName = $"{deobfuscatedFileName}{outputExtension}";
             string decryptedFilePath = Path.Combine(subOutputFolderPath, decryptedFileName);
 
             byte[] md5 = MD5Sum(extPath + Path.GetFileName(encryptedFilePath).ToUpper());
@@ -82,7 +109,8 @@ class Program
                 key,
                 outputFolderPath,
                 subRelativePath,
-                @$"{extPath}{subFolder.Substring(folderPath.Length).TrimStart('\\').ToUpper()}\"
+                @$"{extPath}{subFolder.Substring(folderPath.Length).TrimStart('\\').ToUpper()}\",
+                outputExtension
             );
         }
     }

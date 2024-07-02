@@ -1,14 +1,22 @@
 # IpkDecryptor
 
-[]()
+[](https://github.com/Poyoanon/IpkDecryptor)
 
-This tool that decrypts Lost Ark .ipk files in the ExtRes folder into .png files.
+This tool that decrypts Lost Ark .ipk files into .png and .bk2 files.
 
 # Usage
 
-- Place **IpkDecryptor.exe** in an empty folder, preferably.
-- **Drag and drop** the _ExtRes_ folder _(usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes)_ onto **IpkDecryptor.exe.**
-- The PNGs will be placed in the _Output_ folder.
+## Drag and Drop
+
+> - Place **IpkDecryptor.exe** in an empty folder, preferably.
+> - **Drag and drop** the _ExtRes_ folder _(usually found in C:\Program Files (x86)\Steam\steamapps\common\Lost Ark\EFGame\ReleasePC\Packages\ExtRes)_ onto **IpkDecryptor.exe.**
+> - The PNGs will be placed in the _Output_ folder.
+
+## Command Line
+
+**IpkDecryptor.exe** [ source_folder ]
+
+> **Example:** `IpkDecryptor.Exe "(FOLDER)"`
 
 > [!IMPORTANT]  
-> This does not support Movie .ipk files yet!
+> Currently, the movie files convert to a .bk2 format. You can view .bk2 files through [RAD Game Tools](https://www.radgametools.com/bnkdown.htm), and also convert them to .mp4 files accordingly. Unless you know of a way to convert them with FFMpeg or whatever, to which, please submit an issue if you know how.
