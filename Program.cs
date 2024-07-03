@@ -25,12 +25,12 @@ class Program
         string extPath = "";
         if (folderPath.EndsWith("ExtRes", StringComparison.OrdinalIgnoreCase))
         {
-            extPath = @"EXT://EXTRES\\";
+            extPath = @"EXT://EXTRES\";
             outputExtension = ".png";
         }
         else if (folderPath.EndsWith("Movies", StringComparison.OrdinalIgnoreCase))
         {
-            extPath = @"EXT://MOVIES\\";
+            extPath = @"EXT://MOVIES\";
             outputExtension = ".bk2";
         }
 

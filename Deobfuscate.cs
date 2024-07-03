@@ -1,51 +1,44 @@
-using System;
 using System.Linq;
+using System.Text;
 
 namespace Deobfuscate
 {
-    //NOTE: I took this from Twigzie's C# port of the original rust script, linked below.
+    //NOTE: I adapted this from Twigzie's C# port of the original rust script, linked below.
     //https://github.com/Twigzie/Fantality-LostArkRenamer
     //Credit to the author below. He created the original in rust.
     //https://www.gildor.org/smf/index.php/topic,3055.msg46444.html#msg46444
     public static class Deobfuscate
     {
-        private static readonly Tuple<string, char, int>[] OPT_KEY_TABLE = new Tuple<
-            string,
-            char,
-            int
-        >[]
+        private record TableData(string Item1, char Item2, int Item3);
+
+        private static readonly TableData[] OPT_KEY_TABLE = new[]
         {
-            // Q
-            Tuple.Create("QP", 'Q', 0),
-            Tuple.Create("QD", 'Q', 1),
-            Tuple.Create("QW", 'Q', 2),
-            Tuple.Create("Q4", 'Q', 3),
-            // -
-            Tuple.Create("QL", '-', 0),
-            Tuple.Create("QB", '-', 1),
-            Tuple.Create("QO", '-', 2),
-            Tuple.Create("Q5", '-', 3),
-            // _
-            Tuple.Create("QC", '_', 0),
-            Tuple.Create("QN", '_', 1),
-            Tuple.Create("QT", '_', 2),
-            Tuple.Create("Q9", '_', 3),
-            // X
-            Tuple.Create("XU", 'X', 0),
-            Tuple.Create("XN", 'X', 1),
-            Tuple.Create("XH", 'X', 2),
-            Tuple.Create("X3", 'X', 3),
-            // !
-            Tuple.Create("XW", '!', 0),
-            Tuple.Create("XS", '!', 1),
-            Tuple.Create("XZ", '!', 2),
-            Tuple.Create("X0", '!', 3),
+            new TableData("QP", 'Q', 0),
+            new TableData("QD", 'Q', 1),
+            new TableData("QW", 'Q', 2),
+            new TableData("Q4", 'Q', 3),
+            new TableData("QL", '-', 0),
+            new TableData("QB", '-', 1),
+            new TableData("QO", '-', 2),
+            new TableData("Q5", '-', 3),
+            new TableData("QC", '_', 0),
+            new TableData("QN", '_', 1),
+            new TableData("QT", '_', 2),
+            new TableData("Q9", '_', 3),
+            new TableData("XU", 'X', 0),
+            new TableData("XN", 'X', 1),
+            new TableData("XH", 'X', 2),
+            new TableData("X3", 'X', 3),
+            new TableData("XW", '!', 0),
+            new TableData("XS", '!', 1),
+            new TableData("XZ", '!', 2),
+            new TableData("X0", '!', 3),
         };
 
         private static string Clean(string source)
         {
             source = source.ToUpper();
-            var outStr = new System.Text.StringBuilder();
+            var outStr = new StringBuilder();
             int i = 0;
             while (i < source.Length)
             {
@@ -85,14 +78,7 @@ namespace Deobfuscate
                 outStr.Append((char)i);
             }
             string unescaped = Clean(outStr.ToString());
-            if (unescaped.Contains("!"))
-            {
-                return unescaped.Split('!')[0];
-            }
-            else
-            {
-                return unescaped;
-            }
+            return unescaped.Contains("!") ? unescaped.Split('!')[0] : unescaped;
         }
     }
 }
