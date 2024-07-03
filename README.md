@@ -14,9 +14,7 @@ This tool that decrypts Lost Ark .ipk files into .png and .bk2 files.
 
 ## Command Line
 
-**IpkDecryptor.exe** [ source_folder ]
-
-> **Example:** `IpkDecryptor.Exe "(FOLDER)"`
+> **Example:** `IpkDecryptor.Exe [ source_folder ]
 
 > [!IMPORTANT]  
 > Currently, the movie files convert to a .bk2 format. You can view .bk2 files through [RAD Game Tools](https://www.radgametools.com/bnkdown.htm), and also convert them to .mp4 files accordingly. Unless you know of a way to convert them with FFMpeg or whatever, to which, please submit an issue if you know how.
