@@ -19,6 +19,7 @@ class Program
         string folderPath = args[0];
         const string extension = ".ipk";
         byte[] key = [0xe2, 0xc8, 0x4e, 0x1b, 0x78, 0xc7];
+        //byte[] key = [0x2a, 0x4e, 0x21, 0xe6, 0x10, 0x8a]; KR Version
         string outputFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
 
         string outputExtension = "";
