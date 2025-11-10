@@ -18,8 +18,30 @@ class Program
 
         string folderPath = args[0];
         const string extension = ".ipk";
-        byte[] key = [0xe2, 0xc8, 0x4e, 0x1b, 0x78, 0xc7];
-        //byte[] key = [0x2a, 0x4e, 0x21, 0xe6, 0x10, 0x8a]; KR Version
+        
+        // Region-specific keys
+        byte[] keyNAEU = [0xe2, 0xc8, 0x4e, 0x1b, 0x78, 0xc7];
+        byte[] keyCN = [0xd7, 0x48, 0xb1, 0x22, 0x11, 0x44];
+        
+        // Select region
+        Console.WriteLine("Select region:");
+        Console.WriteLine("1. NA/EU");
+        Console.WriteLine("2. CN");
+        Console.Write("Enter choice (1-2): ");
+        
+        byte[] key = keyNAEU; // Default
+        string choice = Console.ReadLine()?.Trim();
+        
+        if (choice == "2")
+        {
+            key = keyCN;
+            Console.WriteLine("Using CN key");
+        }
+        else
+        {
+            Console.WriteLine("Using NA/EU key");
+        }
+        
         string outputFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Output");
 
         string outputExtension = "";
