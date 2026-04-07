@@ -1,3 +1,5 @@
+# No longer maintaining this
+Please use this repo instead, as it comes with a file explorer! [Lost Ark Explorer](https://github.com/Poyoanon/lostark-explorer)
 # IpkDecryptor
 
 [](https://github.com/Poyoanon/IpkDecryptor)
